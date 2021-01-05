@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Navbar } from '../ui/Navbar'
 
 import moment from 'moment';
@@ -27,10 +27,20 @@ const  events =[{
 
 
 export const CalendarScreen = () => {
+    const [lastView, setLastView] = useState(localStorage.getItem("lastView") || "month")
 
     const onDoubleClick = () =>{
         
     }
+    const onSelectEvent = () =>{
+        
+    }
+    const onViewChange = (e) =>{
+        setLastView(e);
+        localStorage.setItem("lastView",e);
+    }
+
+
 
     const eventStyleGetter = (event, start,end,isSelected) => {
         const style = {
@@ -57,6 +67,9 @@ export const CalendarScreen = () => {
                 messages={messages}
                 eventPropGetter={eventStyleGetter}
                 onDoubleClickEvent={onDoubleClick}
+                onSelectEvent={onSelectEvent}
+                onView={onViewChange}
+                view={lastView}
                 components={{
                     event:CalendarEvent
                 }}
