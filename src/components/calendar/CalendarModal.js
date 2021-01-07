@@ -16,16 +16,24 @@ const customStyles = {
   Modal.setAppElement('#root');
 
   const startDate = moment().minutes(0).seconds(0).add(1,"hours");
+  const endDate =  moment().minutes(0).seconds(0).add(2, "hours");
 
 
 export const CalendarModal = () => {
+
+    const [dateStart, setDateStart] = useState(startDate.toDate());
+    const [dateEnd, setDateEnd] = useState(endDate.toDate());
     
     const closeModal=()=>{
         
     }
     
     const handleStartDatechange =(e)=>{
-        console.log(e)
+       setDateStart(e);
+    }
+
+    const hanldeEndDateChange=(e)=>{
+        setDateEnd(e);
     }
 
     return (
@@ -46,14 +54,20 @@ export const CalendarModal = () => {
     <div className="form-group">
         <label>Fecha y hora inicio</label>
         <DateTimePicker
+        className="form-control"
             onChange={handleStartDatechange}
-            value={startDate.toDate()}
+            value={dateStart}
         />        
     </div>
 
     <div className="form-group">
         <label>Fecha y hora fin</label>
-        <input className="form-control" placeholder="Fecha inicio" />
+        <DateTimePicker
+        className="form-control"
+            onChange={hanldeEndDateChange}
+            minDate={dateStart}
+            value={dateEnd}
+        />  
     </div>
 
     <hr />
