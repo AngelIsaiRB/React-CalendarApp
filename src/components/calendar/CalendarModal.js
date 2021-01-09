@@ -23,6 +23,21 @@ export const CalendarModal = () => {
 
     const [dateStart, setDateStart] = useState(startDate.toDate());
     const [dateEnd, setDateEnd] = useState(endDate.toDate());
+
+    const [formValues, setformValues] = useState({
+        title: "evento",
+        notes:"",
+        start:startDate.toDate(),
+        end:endDate.toDate()
+    });
+    const {notes,title} = formValues;
+
+    const handleInputChange =({target})=>{
+        setformValues({
+            ...formValues,
+            [target.name]:target.value
+        });
+    }
     
     const closeModal=()=>{
         
@@ -30,10 +45,23 @@ export const CalendarModal = () => {
     
     const handleStartDatechange =(e)=>{
        setDateStart(e);
+       setformValues({
+            ...formValues,
+            start:e 
+       });
     }
 
     const hanldeEndDateChange=(e)=>{
         setDateEnd(e);
+        setformValues({
+            ...formValues,
+            end:e 
+       });
+    }
+
+    const handleSubmitForm=(e)=>{
+        e.preventDefault();
+        console.log(formValues);
     }
 
     return (
@@ -49,7 +77,10 @@ export const CalendarModal = () => {
 
 <h1> Nuevo evento </h1>
 <hr />
-<form className="container">
+<form 
+    className="container"
+    onSubmit={ handleSubmitForm }
+    >
 
     <div className="form-group">
         <label>Fecha y hora inicio</label>
@@ -79,6 +110,8 @@ export const CalendarModal = () => {
             placeholder="Título del evento"
             name="title"
             autoComplete="off"
+            value={title }
+            onChange={handleInputChange}
         />
         <small id="emailHelp" className="form-text text-muted">Una descripción corta</small>
     </div>
@@ -90,6 +123,8 @@ export const CalendarModal = () => {
             placeholder="Notas"
             rows="5"
             name="notes"
+            value={notes }
+            onChange={handleInputChange}
         ></textarea>
         <small id="emailHelp" className="form-text text-muted">Información adicional</small>
     </div>
