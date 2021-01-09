@@ -42,7 +42,7 @@ const customStyles = {
     }
     
     const closeModal=()=>{
-        
+        // serrar el modal
     }
     
     const handleStartDatechange =(e)=>{
@@ -75,6 +75,9 @@ const customStyles = {
         if(title.trim().length < 2 ){
             return settitleValid(false);
         }
+        //realizar grabacion en la base de datos
+        settitleValid(true);
+        closeModal();
     }
 
     return (
