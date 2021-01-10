@@ -4,6 +4,7 @@ import moment from "moment";
 const initialState = {
 
     events:[{
+        id: new Date().getTime(),
         title: 'cumpleñaos jej',
         start: moment().toDate(),
         end: moment().add(3,"hour").toDate(),
@@ -35,6 +36,13 @@ export const CalendarReducer =(state = initialState,action)=>{
                ...state,
                activeEvent: null
            }
+       case types.eventUpdate:
+           return {
+               ...state,
+               events: state.events.map(
+                   e=>(e.id === action.payload.id) ? action.payload : e
+               )
+           };
             
             
     

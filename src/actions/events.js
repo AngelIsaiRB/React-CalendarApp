@@ -16,3 +16,9 @@ export const setActive=(event)=>({
 export const eventClearActiveEvent = () =>({
     type: types.eventClearActiveNote
 });
+
+
+export const eventUpdated=(event)=>({
+    type: types.eventUpdate,
+    payload: event
+})
