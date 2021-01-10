@@ -9,7 +9,7 @@ import { messages } from '../../helpers/calendar-messages-es';
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import { CalendarEvent } from './CalendarEvent';
 import { CalendarModal } from './CalendarModal';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { uiOpenModal } from '../../actions/ui';
 import { setActive } from '../../actions/events';
 import { AddNewFab } from '../ui/AddNewFab';
@@ -17,22 +17,12 @@ import { AddNewFab } from '../ui/AddNewFab';
 moment.locale("es");
 const localizer = momentLocalizer(moment);
 
-const  events =[{
-    title: 'cumpleñaos jej',
-    start: moment().toDate(),
-    end: moment().add(3,"hour").toDate(),
-    bgcolor: "#fafafa",
-    user:{
-        _id: "123",
-        name:"isai"
-    }
 
-}]
 
 
 
 export const CalendarScreen = () => {
-
+    const {events} = useSelector(state => state.calendar);
     const dispatch = useDispatch();
     const [lastView, setLastView] = useState(localStorage.getItem("lastView") || "month")
 
@@ -41,7 +31,7 @@ export const CalendarScreen = () => {
     }
     const onSelectEvent = (e) =>{
         dispatch(setActive(e));
-        dispatch(uiOpenModal());
+       
     }
     const onViewChange = (e) =>{
         setLastView(e);

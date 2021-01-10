@@ -13,3 +13,6 @@ export const setActive=(event)=>({
     payload: event
 });
 
+export const eventClearActiveEvent = () =>({
+    type: types.eventClearActiveNote
+});

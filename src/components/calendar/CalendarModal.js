@@ -1,11 +1,11 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Modal from 'react-modal';
 import DateTimePicker from 'react-datetime-picker';
 import moment from 'moment';
 import Swal from "sweetalert2";
 import { useDispatch, useSelector } from 'react-redux';
 import { uiCloseModal } from '../../actions/ui';
-import { eventAddNew } from '../../actions/events';
+import { eventAddNew, eventClearActiveEvent } from '../../actions/events';
 
 const customStyles = {
     content : {
@@ -21,24 +21,34 @@ const customStyles = {
 
   const startDate = moment().minutes(0).seconds(0).add(1,"hours");
   const endDate =  moment().minutes(0).seconds(0).add(2, "hours");
+
+  const initEvent = {
+    title: "",
+    notes:"",
+    start:startDate.toDate(),
+    end:endDate.toDate()
+};
   
   export const CalendarModal = () => {
     // store  
-    const {modalOpen} = useSelector(state => state.ui);
+    const {modalOpen} = useSelector(state => state.ui); 
+    const {activeEvent} = useSelector(state => state.calendar); 
     const dispatch = useDispatch();
 
-      const [dateStart, setDateStart] = useState(startDate.toDate());
-      const [dateEnd, setDateEnd] = useState(endDate.toDate());
-      //   para alertas con boootstrap
+    const [dateStart, setDateStart] = useState(startDate.toDate());
+    const [dateEnd, setDateEnd] = useState(endDate.toDate());
+    //   para alertas con boootstrap
     const [titleValid, settitleValid] = useState(true);
     
-    const [formValues, setformValues] = useState({
-        title: "evento",
-        notes:"",
-        start:startDate.toDate(),
-        end:endDate.toDate()
-    });
+    const [formValues, setformValues] = useState(initEvent);
     const {notes,title,start, end} = formValues;
+
+    useEffect(() => {
+        if(activeEvent){
+            setformValues(activeEvent);
+        }
+    }, [activeEvent,setformValues])
+
 
     const handleInputChange =({target})=>{
         setformValues({
@@ -49,6 +59,8 @@ const customStyles = {
     
     const closeModal=()=>{
         dispatch(uiCloseModal());
+        dispatch(eventClearActiveEvent());
+        setformValues(initEvent);
     }
     
     const handleStartDatechange =(e)=>{
