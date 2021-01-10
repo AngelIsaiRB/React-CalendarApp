@@ -3,6 +3,8 @@ import Modal from 'react-modal';
 import DateTimePicker from 'react-datetime-picker';
 import moment from 'moment';
 import Swal from "sweetalert2";
+import { useDispatch, useSelector } from 'react-redux';
+import { uiCloseModal } from '../../actions/ui';
 
 const customStyles = {
     content : {
@@ -20,7 +22,10 @@ const customStyles = {
   const endDate =  moment().minutes(0).seconds(0).add(2, "hours");
   
   export const CalendarModal = () => {
-      
+    // store  
+    const {modalOpen} = useSelector(state => state.ui);
+    const dispatch = useDispatch();
+
       const [dateStart, setDateStart] = useState(startDate.toDate());
       const [dateEnd, setDateEnd] = useState(endDate.toDate());
       //   para alertas con boootstrap
@@ -42,7 +47,7 @@ const customStyles = {
     }
     
     const closeModal=()=>{
-        // serrar el modal
+        dispatch(uiCloseModal());
     }
     
     const handleStartDatechange =(e)=>{
@@ -82,7 +87,7 @@ const customStyles = {
 
     return (
         <Modal
-          isOpen={true}
+          isOpen={modalOpen}
         //   onAfterOpen={afterOpenModal}
           onRequestClose={closeModal}
           style={customStyles}
