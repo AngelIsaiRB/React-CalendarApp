@@ -47,6 +47,9 @@ const customStyles = {
         if(activeEvent){
             setformValues(activeEvent);
         }
+        else{
+            setformValues(initEvent);
+        }
     }, [activeEvent,setformValues])
 
 
@@ -123,7 +126,12 @@ const customStyles = {
           overlayClassName="modal-fondo"
         >
 
-<h1> Nuevo evento </h1>
+<h1> {
+    (activeEvent)    
+    ?"Actializar evento"
+    :"Nuevo evento"
+    }
+</h1>
 <hr />
 <form 
     className="container"
