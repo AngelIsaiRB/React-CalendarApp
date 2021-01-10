@@ -3,7 +3,7 @@ import { Provider } from 'react-redux'
 import { AppRouter } from './router/AppRouter'
 import { store } from './store/store'
 
-
+// end its functional without server
 
 
 export const CalendarApp = () => {
